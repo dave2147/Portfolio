@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Oil_dashboard</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Umoh | Data Analyst Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --accent: #0ea5e9;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.08);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c1526, #1a2c46);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px; /* Reduced vertical padding */
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0; /* Reduced padding */
+            margin-bottom: 25px; /* Reduced margin */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 18px; /* Slightly reduced gap */
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.95rem; /* Slightly smaller */
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a.active {
+            background: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 35px; /* Reduced margin */
+        }
+        
+        .avatar {
+            width: 130px; /* Slightly smaller */
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            margin-bottom: 20px; /* Reduced margin */
+            background: linear-gradient(45deg, #1e3a8a, #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem; /* Slightly smaller */
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 2.6rem; /* Slightly smaller */
+            margin-bottom: 12px; /* Reduced margin */
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem; /* Slightly smaller */
+            color: var(--gray);
+            max-width: 700px;
+            margin-bottom: 25px; /* Reduced margin */
+            padding: 0 15px; /* Added horizontal padding */
+        }
+        
+        .contact-links {
+            display: flex;
+            gap: 12px; /* Reduced gap */
+            margin-bottom: 25px; /* Reduced margin */
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px; /* More compact */
+            border-radius: 30px;
+            text-decoration: none;
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            font-size: 0.95rem; /* Slightly smaller */
+        }
+        
+        .contact-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Project Section */
+        .section-title {
+            font-size: 2rem; /* Slightly smaller */
+            margin-bottom: 25px; /* Reduced margin */
+            text-align: center;
+            position: relative;
+            padding-bottom: 12px; /* Reduced padding */
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px; /* Slightly smaller */
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 35px; /* Reduced margin */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-header {
+            padding: 20px; /* Reduced padding */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .project-title {
+            font-size: 1.8rem; /* Slightly smaller */
+            margin-bottom: 12px; /* Reduced margin */
+            color: var(--accent);
+        }
+        
+        .project-description {
+            color: var(--gray);
+            margin-bottom: 18px; /* Reduced margin */
+            line-height: 1.7; /* Tighter line height */
+            font-size: 1rem; /* Slightly smaller */
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Reduced gap */
+            margin-bottom: 20px; /* Reduced margin */
+        }
+        
+        .tech-item {
+            background: rgba(37, 99, 235, 0.2);
+            color: var(--accent);
+            padding: 7px 16px; /* More compact */
+            border-radius: 30px;
+            font-size: 0.85rem; /* Smaller font */
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 10px; /* Reduced gap */
+        }
+        
+        .project-link {
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Reduced gap */
+            padding: 10px 20px; /* More compact */
+            border-radius: 30px;
+            text-decoration: none;
+            color: var(--light);
+            background: var(--primary);
+            transition: all 0.3s ease;
+            font-size: 0.95rem; /* Slightly smaller */
+        }
+        
+        .project-link:hover {
+            background: var(--primary-dark);
+        }
+        
+        .project-link.outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+        }
+        
+        .project-link.outline:hover {
+            background: rgba(37, 99, 235, 0.1);
+        }
+        
+        /* Dashboard Styles */
+        .dashboard-container {
+            padding: 20px; /* Reduced padding */
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px; /* Reduced margin */
+            flex-wrap: wrap;
+            gap: 12px; /* Reduced gap */
+        }
+        
+        .dashboard-title {
+            font-size: 1.6rem; /* Slightly smaller */
+            color: var(--accent);
+        }
+        
+        .auto-refresh-status {
+            font-size: 0.9rem; /* Slightly smaller */
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly smaller min-width */
+            gap: 18px; /* Reduced gap */
+            margin-bottom: 25px; /* Reduced margin */
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px; /* Reduced padding */
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        
+        .card h2 {
+            font-size: 1.2rem; /* Slightly smaller */
+            margin-bottom: 18px; /* Reduced margin */
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Reduced gap */
+        }
+        
+        .price-display {
+            font-size: 2.3rem; /* Slightly smaller */
+            font-weight: 700;
+            margin: 12px 0; /* Reduced margin */
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px; /* Reduced gap */
+            margin-top: 15px; /* Reduced margin */
+        }
+        
+        .info-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px; /* Reduced padding */
+            border-radius: 10px;
+        }
+        
+        .info-item h3 {
+            font-size: 0.85rem; /* Slightly smaller */
+            margin-bottom: 5px;
+            color: var(--gray);
+        }
+        
+        .info-value {
+            font-size: 1.2rem; /* Slightly smaller */
+            font-weight: 700;
+        }
+        
+        .positive {
+            color: var(--success);
+        }
+        
+        .negative {
+            color: var(--danger);
+        }
+        
+        .chart-container {
+            height: 230px; /* Slightly shorter */
+            margin-top: 15px; /* Reduced margin */
+            position: relative;
+        }
+        
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem; /* Slightly smaller */
+            margin-top: 5px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px; /* Reduced gap */
+            margin: 15px 0; /* Reduced margin */
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px; /* More compact */
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Reduced gap */
+            font-size: 0.95rem; /* Slightly smaller */
+        }
+        
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly smaller min-width */
+            gap: 20px; /* Reduced gap */
+            margin-top: 25px; /* Reduced margin */
+        }
+        
+        .skill-category {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 22px; /* Reduced padding */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .skill-category h3 {
+            font-size: 1.4rem; /* Slightly smaller */
+            margin-bottom: 18px; /* Reduced margin */
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Reduced gap */
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px; /* Reduced gap */
+        }
+        
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Reduced gap */
+            padding: 10px; /* Reduced padding */
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            background: rgba(37, 99, 235, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .skill-icon {
+            font-size: 1.6rem; /* Slightly smaller */
+            color: var(--accent);
+            width: 35px; /* Smaller width */
+            text-align: center;
+        }
+        
+        .skill-name {
+            font-weight: 500;
+            font-size: 0.95rem; /* Slightly smaller */
+        }
+        
+        /* Process Section */
+        .process-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px; /* Reduced gap */
+            margin-top: 25px; /* Reduced margin */
+        }
+        
+        .process-card {
+            flex: 1;
+            min-width: 240px; /* Slightly smaller */
+            background: var(--card-bg);
+            padding: 25px; /* Reduced padding */
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .process-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .process-icon {
+            font-size: 2.2rem; /* Slightly smaller */
+            color: var(--accent);
+            margin-bottom: 15px; /* Reduced margin */
+        }
+        
+        .process-card h3 {
+            font-size: 1.3rem; /* Slightly smaller */
+            margin-bottom: 12px; /* Reduced margin */
+        }
+        
+        .process-card p {
+            color: var(--gray);
+            line-height: 1.7; /* Tighter line height */
+            font-size: 0.95rem; /* Slightly smaller */
+        }
+        
+        /* About Section */
+        .about-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px; /* Reduced padding */
+            margin-top: 35px; /* Reduced margin */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px; /* Reduced gap */
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 280px; /* Slightly smaller */
+        }
+        
+        .about-text h2 {
+            font-size: 1.8rem; /* Slightly smaller */
+            margin-bottom: 15px; /* Reduced margin */
+            color: var(--accent);
+        }
+        
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 18px; /* Reduced margin */
+            line-height: 1.7; /* Tighter line height */
+            font-size: 1rem; /* Slightly smaller */
+        }
+        
+        .professional-focus {
+            flex: 1;
+            min-width: 280px; /* Slightly smaller */
+            background: rgba(15, 23, 42, 0.5);
+            padding: 20px; /* Reduced padding */
+            border-radius: 15px;
+        }
+        
+        .professional-focus h3 {
+            font-size: 1.4rem; /* Slightly smaller */
+            margin-bottom: 15px; /* Reduced margin */
+            color: var(--accent);
+        }
+        
+        .professional-focus ul {
+            list-style-type: none;
+            color: var(--gray);
+            line-height: 2.0; /* Tighter line height */
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 35px 0; /* Reduced padding */
+            margin-top: 50px; /* Reduced margin */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem; /* Slightly smaller */
+            font-weight: 700;
+            margin-bottom: 15px; /* Reduced margin */
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .copyright {
+            color: var(--gray);
+            margin-bottom: 15px; /* Reduced margin */
+            font-size: 0.95rem; /* Slightly smaller */
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Reduced gap */
+            margin-top: 15px; /* Reduced margin */
+        }
+        
+        .social-link {
+            color: var(--accent);
+            font-size: 1.6rem; /* Slightly smaller */
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px; /* More compact on small screens */
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 12px; /* Reduced gap */
+            }
+            
+            .nav-links {
+                gap: 8px; /* Reduced gap */
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links a {
+                padding: 6px 12px; /* More compact */
+                font-size: 0.9rem; /* Smaller on mobile */
+            }
+            
+            .hero h1 {
+                font-size: 2rem; /* Adjusted for mobile */
+                padding: 0 10px;
+            }
+            
+            .hero p {
+                font-size: 1.05rem; /* Adjusted for mobile */
+                padding: 0 10px;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px; /* Reduced gap */
+            }
+            
+            .auto-refresh-status {
+                font-size: 0.85rem; /* Smaller for mobile */
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .project-header {
+                padding: 18px; /* Adjusted padding */
+            }
+            
+            .project-title {
+                font-size: 1.6rem; /* Smaller on mobile */
+            }
+            
+            .dashboard-container {
+                padding: 15px; /* More compact */
+            }
+            
+            .card {
+                padding: 18px; /* More compact */
+            }
+            
+            .section-title {
+                font-size: 1.8rem; /* Smaller on mobile */
+            }
+            
+            .about-content {
+                padding: 20px; /* Adjusted padding */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem; /* Smaller on very small screens */
+            }
+            
+            .hero p {
+                font-size: 1rem; /* Smaller on very small screens */
+            }
+            
+            .section-title {
+                font-size: 1.6rem; /* Smaller on very small screens */
+            }
+        }
+        
+        /* Animation for price changes */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        .price-update {
+            animation: pulse 0.8s ease;
+        }
+        
+        .highlight {
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">David Umoh</div>
+            <div class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#process">Process</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </header>
+        
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h1>Data Analyst & Developer</h1>
+            <p>Transforming complex data into actionable insights with Python, JavaScript, and business intelligence tools</p>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/david-umoh-26031a172/" class="contact-link" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com/dave2147" class="contact-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="mailto:meofon23@gmail.com" class="contact-link">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+            </div>
+        </section>
+        
+        <!-- Project Section -->
+        <section id="projects">
+            <h2 class="section-title">Oil Price Dashboard</h2>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h2 class="project-title">Real-Time Oil Price Dashboard</h2>
+                    <p class="project-description">
+                        A dynamic dashboard displaying real-time WTI Crude Oil prices with market analysis,
+                        predictive forecasts, and historical data. This project combines <span class="highlight">Python</span> for data processing
+                        and analysis with <span class="highlight">HTML/CSS/JavaScript</span> for the interactive frontend interface. Data was sourced
+                        from financial APIs and transformed using Python scripts to generate actionable insights.
+                    </p>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">JavaScript</span>
+                        <span class="tech-item">HTML5</span>
+                        <span class="tech-item">CSS3</span>
+                        <span class="tech-item">Chart.js</span>
+                        <span class="tech-item">Data Visualization</span>
+                        <span class="tech-item">Excel</span>
+                        <span class="tech-item">Spreadsheets</span>
+                        <span class="tech-item">Pandas</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="https://github.com/dave2147" class="project-link" target="_blank">
+                            <i class="fab fa-github"></i> Source Code
+                        </a>
+                        <a href="#" class="project-link outline">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Dashboard -->
+                <div class="dashboard-container">
+                    <div class="dashboard-header">
+                        <h2 class="dashboard-title">WTI Crude Oil Dashboard</h2>
+                        <div class="auto-refresh-status">
+                            Auto-refresh: <span id="countdownStatus">Enabled</span> | 
+                            Next update in: <span id="countdown">60</span> seconds
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard">
+                        <div class="card">
+                            <h2><i class="fas fa-chart-line"></i> Current Market Price</h2>
+                            <div class="price-display" id="currentPrice">$65.70</div>
+                            <div class="change positive" id="priceChange">+0.42% ($0.27)</div>
+                            
+                            <div class="trend-visualization">
+                                <span>1H:</span>
+                                <div class="trend-bar" style="background: linear-gradient(to right, var(--danger) 20%, var(--success) 80%);"></div>
+                                <span class="trend-value positive">+0.8%</span>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <h3>24H HIGH</h3>
+                                    <div class="info-value" id="highPrice">$65.85</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>24H LOW</h3>
+                                    <div class="info-value" id="lowPrice">$64.92</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>VOLUME</h3>
+                                    <div class="info-value" id="volume">1.82M</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>OPEN</h3>
+                                    <div class="info-value" id="openPrice">$65.12</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <h2><i class="fas fa-bolt"></i> Market Analysis</h2>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <h3>RISK INDEX</h3>
+                                    <div class="info-value" id="riskIndex">5.75%</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>MARKET SENTIMENT</h3>
+                                    <div class="info-value positive" id="sentiment">Bullish</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>VOLATILITY</h3>
+                                    <div class="info-value" id="volatility">Low</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>TREND</h3>
+                                    <div class="info-value positive" id="trend">Upward</div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <canvas id="miniChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <h2><i class="fas fa-project-diagram"></i> Predictions & Forecast</h2>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <h3>7-DAY FORECAST</h3>
+                                    <div class="info-value positive" id="forecast7">$66.20</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>30-DAY FORECAST</h3>
+                                    <div class="info-value positive" id="forecast30">$67.80</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>SUPPORT LEVEL</h3>
+                                    <div class="info-value" id="support">$64.50</div>
+                                </div>
+                                <div class="info-item">
+                                    <h3>RESISTANCE LEVEL</h3>
+                                    <div class="info-value" id="resistance">$66.40</div>
+                                </div>
+                            </div>
+                            
+                            <div class="trend-visualization">
+                                <span>Trend Strength:</span>
+                                <div class="trend-bar" style="background: linear-gradient(to right, var(--success) 80%, var(--danger) 20%);"></div>
+                                <span class="trend-value positive">Strong</span>
+                            </div>
+                            
+                            <div class="last-updated">
+                                Next update: <span id="nextUpdate">00:01:25</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button id="refreshBtn"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+                        <button id="autoToggle"><i class="fas fa-pause"></i> Pause Auto-Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" style="margin-top: 50px;">
+            <h2 class="section-title">Technical Expertise</h2>
+            
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3><i class="fas fa-laptop-code"></i> Programming & Development</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fab fa-python"></i></div>
+                            <div class="skill-name">Python</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fab fa-js"></i></div>
+                            <div class="skill-name">JavaScript</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                            <div class="skill-name">HTML5</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                            <div class="skill-name">CSS3</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-database"></i></div>
+                            <div class="skill-name">SQL</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-code"></i></div>
+                            <div class="skill-name">API Integration</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-chart-bar"></i> Data Analysis & Visualization</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-file-excel"></i></div>
+                            <div class="skill-name">Excel</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-table"></i></div>
+                            <div class="skill-name">Spreadsheets</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="skill-name">Data Visualization</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-calculator"></i></div>
+                            <div class="skill-name">Statistical Analysis</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                            <div class="skill-name">Predictive Modeling</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
+                            <div class="skill-name">Data Pipelines</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fab fa-google"></i></div>
+                            <div class="skill-name">Google Analytics</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-chart-pie"></i></div>
+                            <div class="skill-name">Tableau</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+                            <div class="skill-name">Power BI</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                            <div class="skill-name">Git</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-server"></i></div>
+                            <div class="skill-name">SQL Databases</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon"><i class="fas fa-flask"></i></div>
+                            <div class="skill-name">Pandas/NumPy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Process Section -->
+        <section id="process" style="margin-top: 50px;">
+            <h2 class="section-title">My Data Analysis Process</h2>
+            
+            <div class="process-container">
+                <div class="process-card">
+                    <div class="process-icon"><i class="fas fa-search"></i></div>
+                    <h3>Data Collection</h3>
+                    <p>Gathering data from multiple sources including APIs, databases, spreadsheets, and web scraping using Python scripts and Excel automation.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-icon"><i class="fas fa-broom"></i></div>
+                    <h3>Cleaning & Preparation</h3>
+                    <p>Transforming raw data into usable formats using Python (Pandas), Excel, and SQL to handle missing values, outliers, and inconsistencies.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Analysis & Modeling</h3>
+                    <p>Applying statistical methods, predictive modeling, and trend analysis using Python and Excel to uncover patterns and insights.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-icon"><i class="fas fa-tv"></i></div>
+                    <h3>Visualization & Reporting</h3>
+                    <p>Creating interactive dashboards and reports using JavaScript, Chart.js, and Excel to communicate findings effectively.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" style="margin-top: 50px;">
+            <h2 class="section-title">About Me</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>David Umoh</h2>
+                    <p>
+                        I'm a data analyst and developer with expertise in transforming complex datasets into actionable business insights. 
+                        My approach combines <span class="highlight">advanced Excel techniques</span>, <span class="highlight">Python programming</span>, and <span class="highlight">data visualization</span> to deliver
+                        comprehensive solutions that drive decision-making.
+                    </p>
+                    <p>
+                        My oil price dashboard project demonstrates my ability to integrate Python for data processing with 
+                        JavaScript for interactive frontend experiences. I specialize in creating tools that bridge the gap 
+                        between technical data analysis and business stakeholders.
+                    </p>
+                    
+                    <div class="project-links">
+                        <a href="https://www.linkedin.com/in/david-umoh-26031a172/" class="project-link" target="_blank">
+                            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+                        </a>
+                        <a href="https://github.com/dave2147" class="project-link outline" target="_blank">
+                            <i class="fab fa-github"></i> View GitHub Projects
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="professional-focus">
+                    <h3>Professional Focus</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i> Building interactive data dashboards</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i> Developing automated reporting systems</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i> Creating predictive models for business forecasting</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i> Optimizing data workflows with Python and Excel</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i> Designing data visualizations for executive decision-making</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer id="contact">
+            <div class="footer-logo">David Umoh</div>
+            <p class="copyright">© 2023 David Umoh. All rights reserved.</p>
+            
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/david-umoh-26031a172/" class="social-link" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/dave2147" class="social-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:meofon23@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const currentPriceEl = document.getElementById('currentPrice');
+        const priceChangeEl = document.getElementById('priceChange');
+        const highPriceEl = document.getElementById('highPrice');
+        const lowPriceEl = document.getElementById('lowPrice');
+        const volumeEl = document.getElementById('volume');
+        const openPriceEl = document.getElementById('openPrice');
+        const lastUpdatedEl = document.getElementById('lastUpdated');
+        const countdownEl = document.getElementById('countdown');
+        const nextUpdateEl = document.getElementById('nextUpdate');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const autoToggle = document.getElementById('autoToggle');
+        const riskIndexEl = document.getElementById('riskIndex');
+        const sentimentEl = document.getElementById('sentiment');
+        const volatilityEl = document.getElementById('volatility');
+        const trendEl = document.getElementById('trend');
+        const forecast7El = document.getElementById('forecast7');
+        const forecast30El = document.getElementById('forecast30');
+        const supportEl = document.getElementById('support');
+        const resistanceEl = document.getElementById('resistance');
+        const countdownStatus = document.getElementById('countdownStatus');
+        
+        // Initial data - WTI Crude Oil
+        let currentPrice = 65.70;
+        let autoRefreshEnabled = true;
+        let refreshInterval;
+        let countdownInterval;
+        let miniChart = null;
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTime();
+            initDashboard();
+        });
+        
+        // Initialize dashboard
+        function initDashboard() {
+            updatePrices();
+            updateMarketAnalysis();
+            updateMiniChart();
+            startAutoRefresh();
+        }
+        
+        // Update time displays
+        function updateTime() {
+            const now = new Date();
+            
+            // Update next update time
+            const nextUpdate = new Date(now.getTime() + 60000);
+            nextUpdateEl.textContent = nextUpdate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        
+        // Update all prices with realistic fluctuations
+        function updatePrices() {
+            // Add loading effect
+            currentPriceEl.classList.add('price-update');
+            
+            // Simulate price fluctuations around $65.70
+            setTimeout(() => {
+                const fluctuation = (Math.random() - 0.5) * 0.8;
+                currentPrice = 65.70 + fluctuation;
+                
+                // Update UI elements
+                currentPriceEl.textContent = `$${currentPrice.toFixed(2)}`;
+                
+                const change = (Math.random() - 0.3) * 1.2;
+                const changeValue = (currentPrice * change / 100);
+                const changeDisplay = change >= 0 ? 
+                    `+${change.toFixed(2)}% ($${Math.abs(changeValue).toFixed(2)})` : 
+                    `${change.toFixed(2)}% (-$${Math.abs(changeValue).toFixed(2)})`;
+                
+                priceChangeEl.textContent = changeDisplay;
+                priceChangeEl.className = change >= 0 ? 'change positive' : 'change negative';
+                
+                // Update other metrics
+                highPriceEl.textContent = `$${(currentPrice + Math.random() * 0.8).toFixed(2)}`;
+                lowPriceEl.textContent = `$${(currentPrice - Math.random() * 0.6).toFixed(2)}`;
+                volumeEl.textContent = `${(1.6 + Math.random() * 0.5).toFixed(2)}M`;
+                openPriceEl.textContent = `$${(65.70 - fluctuation/2).toFixed(2)}`;
+                
+                // Remove animation class
+                setTimeout(() => {
+                    currentPriceEl.classList.remove('price-update');
+                }, 800);
+                
+                // Update time
+                updateTime();
+            }, 300);
+        }
+        
+        // Update market analysis
+        function updateMarketAnalysis() {
+            const riskIndex = (5 + Math.random() * 1.5).toFixed(2);
+            const sentiment = Math.random() > 0.3 ? 'Bullish' : 'Bearish';
+            const volatility = Math.random() > 0.7 ? 'High' : Math.random() > 0.4 ? 'Moderate' : 'Low';
+            const trend = Math.random() > 0.3 ? 'Upward' : 'Stable';
+            
+            riskIndexEl.textContent = `${riskIndex}%`;
+            sentimentEl.textContent = sentiment;
+            sentimentEl.className = sentiment === 'Bullish' ? 'info-value positive' : 'info-value negative';
+            volatilityEl.textContent = volatility;
+            trendEl.textContent = trend;
+            trendEl.className = trend === 'Upward' ? 'info-value positive' : 'info-value';
+            
+            // Update predictions
+            const forecast7 = 65.70 * (1 + (Math.random() * 0.02));
+            const forecast30 = 65.70 * (1 + (Math.random() * 0.05));
+            const support = 65.70 * (1 - (Math.random() * 0.015));
+            const resistance = 65.70 * (1 + (Math.random() * 0.015));
+            
+            forecast7El.textContent = `$${forecast7.toFixed(2)}`;
+            forecast30El.textContent = `$${forecast30.toFixed(2)}`;
+            supportEl.textContent = `$${support.toFixed(2)}`;
+            resistanceEl.textContent = `$${resistance.toFixed(2)}`;
+        }
+        
+        // Create mini chart with trend coloring
+        function updateMiniChart() {
+            const ctx = document.getElementById('miniChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (miniChart) {
+                miniChart.destroy();
+            }
+            
+            // Generate chart data around $65.70
+            const data = [];
+            let basePrice = 65.5;
+            
+            for (let i = 0; i < 20; i++) {
+                const fluctuation = (Math.random() - 0.4) * 0.5;
+                basePrice = basePrice * (1 + fluctuation * 0.005);
+                data.push(basePrice);
+            }
+            
+            // Set the last point to current price
+            data[19] = currentPrice;
+            
+            // Determine if the trend is positive or negative
+            const lastValue = data[data.length - 1];
+            const prevValue = data[data.length - 2];
+            const isPositive = lastValue > prevValue;
+            
+            // Create gradient for the chart
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, isPositive ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            
+            // Create chart
+            miniChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 20}, (_, i) => `${i+1}`),
+                    datasets: [{
+                        label: 'Price Trend',
+                        data: data,
+                        borderColor: isPositive ? '#10b981' : '#ef4444',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            titleFont: { size: 14 },
+                            bodyFont: { size: 13 },
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return `$${context.parsed.y.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            display: false,
+                            grid: { display: false }
+                        },
+                        y: { 
+                            display: false,
+                            grid: { display: false }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+        
+        // Start auto-refresh
+        function startAutoRefresh() {
+            if (refreshInterval) clearInterval(refreshInterval);
+            
+            refreshInterval = setInterval(() => {
+                if (autoRefreshEnabled) {
+                    updatePrices();
+                    updateMarketAnalysis();
+                    updateMiniChart();
+                    resetCountdown();
+                }
+            }, 60000); // Refresh every 60 seconds
+            
+            resetCountdown();
+            countdownStatus.textContent = "Enabled";
+            autoToggle.innerHTML = '<i class="fas fa-pause"></i> Pause Auto-Refresh';
+        }
+        
+        // Stop auto-refresh
+        function stopAutoRefresh() {
+            if (refreshInterval) clearInterval(refreshInterval);
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownStatus.textContent = "Disabled";
+            autoToggle.innerHTML = '<i class="fas fa-play"></i> Start Auto-Refresh';
+        }
+        
+        // Reset countdown timer
+        function resetCountdown() {
+            let seconds = 60;
+            
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            countdownEl.textContent = seconds;
+            
+            countdownInterval = setInterval(() => {
+                seconds--;
+                countdownEl.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        }
+        
+        // Event listeners
+        refreshBtn.addEventListener('click', () => {
+            updatePrices();
+            updateMarketAnalysis();
+            updateMiniChart();
+            resetCountdown();
+        });
+        
+        autoToggle.addEventListener('click', () => {
+            autoRefreshEnabled = !autoRefreshEnabled;
+            if (autoRefreshEnabled) {
+                startAutoRefresh();
+            } else {
+                stopAutoRefresh();
+                countdownEl.textContent = 'PAUSED';
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
